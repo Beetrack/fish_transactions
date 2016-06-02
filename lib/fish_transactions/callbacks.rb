@@ -20,7 +20,7 @@ module FishTransactions
     #   <tt>:rollback</tt>.
     # * <tt>:if_no_transaction</tt> - Specifies what to do if there is no
     #   active transaction. Accepts one of the following symbols:
-    #   <tt>:run</tt> (default), <tt>:skip</tt>.
+    #   <tt>:run</tt> (default), <tt>:skip</tt> (do not run).
     #
     # Example of use:
     #
@@ -48,10 +48,21 @@ module FishTransactions
     end
 
     ##
+    # Executes some code only after current transactions does commit.
+    # If no transaction is actually open, the code runs immediately.
+    #
+    #
+    # Use #after_transaction for more options
     def after_commit(&block)
 
     end
 
+    ##
+    # Executes some code only after current transaction does rollback.
+    # If no transaction is actually open, the code runs immediately.
+    #
+    #
+    # Use #after_transaction for more options
     def after_rollback(&block)
 
     end
