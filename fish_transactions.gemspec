@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.4"
   spec.add_development_dependency "rdoc"
+  spec.add_development_dependency 'activerecord-nulldb-adapter'
 
   spec.add_runtime_dependency "activerecord", "~> 4.2"
 

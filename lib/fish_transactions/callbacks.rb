@@ -54,7 +54,7 @@ module FishTransactions
     #
     # Use #after_transaction for more options
     def after_commit(&block)
-
+      yield
     end
 
     ##
