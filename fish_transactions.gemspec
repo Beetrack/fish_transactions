@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Callbacks for Active Record transactions that can be used anywhere.}
   spec.description   = %q{Allows to pospose the execution of a code waiting for Active Record transactions, on commit, on rollback or both.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/Beetrack/fish_transactions"
   spec.license       = "MIT"
 
   #spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
