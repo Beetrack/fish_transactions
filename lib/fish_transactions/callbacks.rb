@@ -44,8 +44,10 @@ module FishTransactions
     #
     #
     def after_transaction(opts = {}, &block)
-
+      # TODO
+      yield
     end
+    alias after_tx after_transaction
 
     ##
     # Executes some code only after current transactions does commit.
@@ -54,17 +56,19 @@ module FishTransactions
     #
     # Use #after_transaction for more options
     def after_commit(&block)
+      # TODO
       yield
     end
 
     ##
     # Executes some code only after current transaction does rollback.
-    # If no transaction is actually open, the code runs immediately.
+    # If no transaction is actually open, the code does not runs.
     #
     #
     # Use #after_transaction for more options
     def after_rollback(&block)
-
+      # TODO
+      yield
     end
 
   end
