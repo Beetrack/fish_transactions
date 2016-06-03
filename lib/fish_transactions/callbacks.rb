@@ -53,22 +53,18 @@ module FishTransactions
     # Executes some code only after current transactions does commit.
     # If no transaction is actually open, the code runs immediately.
     #
-    #
     # Use #after_transaction for more options
     def after_commit(&block)
-      # TODO
-      yield
+      after_transaction(only: :commit, &block)
     end
 
     ##
     # Executes some code only after current transaction does rollback.
     # If no transaction is actually open, the code does not runs.
     #
-    #
     # Use #after_transaction for more options
     def after_rollback(&block)
-      # TODO
-      yield
+      after_transaction(only: :rollback, if_no_transaction: :skip, &block)
     end
 
   end
