@@ -1,4 +1,6 @@
-# :nodoc: all
+# :nodoc:
 module FishTransactions
-  VERSION = "0.0.1"
+  ##
+  # current version
+  VERSION = "1.0.0"
 end

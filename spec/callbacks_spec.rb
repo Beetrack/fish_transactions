@@ -260,7 +260,7 @@ module FishTransactions
               :the_after_transaction_block
             )
             ActiveRecord::Base.transaction do
-              execution_double.run_with_after_transaction_no_args
+              execution_double.run_with_after_transaction(only: :commit)
             end
           end
 
@@ -273,7 +273,7 @@ module FishTransactions
               :the_after_transaction_block
             )
             ActiveRecord::Base.transaction do
-              execution_double.run_with_after_transaction_no_args
+              execution_double.run_with_after_transaction(only: :commit)
               raise ActiveRecord::Rollback
             end
           end
@@ -290,7 +290,7 @@ module FishTransactions
               :the_after_transaction_block
             )
             ActiveRecord::Base.transaction do
-              execution_double.run_with_after_transaction_no_args
+              execution_double.run_with_after_transaction(only: :rollback)
             end
           end
 
@@ -302,7 +302,7 @@ module FishTransactions
               :the_after_transaction_block
             )
             ActiveRecord::Base.transaction do
-              execution_double.run_with_after_transaction_no_args
+              execution_double.run_with_after_transaction(only: :rollback)
               raise ActiveRecord::Rollback
             end
           end

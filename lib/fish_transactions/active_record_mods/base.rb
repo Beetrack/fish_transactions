@@ -7,7 +7,7 @@ module FishTransactions
   module ActiveRecordMods
     ##
     # Modifications for ActiveRecord::Base class
-    # All methods here well be class level methods
+    # All methods here will be class level methods
     module Base
 
       ##
@@ -30,8 +30,9 @@ module FishTransactions
 
 
       ##
-      #
-      #
+      # Wrapper of original transaction.
+      # Captures and then raises Rollback exception
+      # to know there were a rollback
       def transaction_with_callbacks(*args)
 
         committed = true
@@ -40,14 +41,19 @@ module FishTransactions
           begin
             yield
           rescue ActiveRecord::Rollback
-            commit = false
+            committed = false
             raise
           end
         end
       rescue Exception
-        commit = false
+        committed = false
         raise
       ensure
+        if committed
+          callbacks.committed!
+        else
+          callbacks.rolledback!
+        end
       end
 
       ##

@@ -1,8 +1,6 @@
 # FishTransactions
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/fish_transactions`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Fish Transactions allows to add transaction callbacks anywhere.
 
 ## Installation
 
@@ -22,17 +20,68 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+First you need to include `FishTransactions#Callbacks` module into the class
+you want to use it.
+Once included, you can directly call `after_commit` or `after_rollback` with
+the code you wanna run on such events.
 
-## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+#### Example
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+class SomeClass
+
+  include FishTransaction::Callbacks
+
+  # ...
+
+  def some_method
+    # ...
+
+    ActiveRecord::Base.transaction do
+      # executes some code
+      puts "runs within transaction"
+
+      after_commit do
+
+        # things to do after transaction
+        puts "runs after transaction"
+
+      end
+
+      # executes more code
+      puts "again runs within transaction"
+    end
+    # ...
+
+  end
+
+  # ...
+
+end
+
+```
+will output
+```
+runs within transaction
+again runs within transaction
+runs after transaction
+```
+
+Please see [FishTransactions::Callbacks](FishTransactions/Callbacks.html) for more details.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/fish_transactions. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at
+[beetrack/fish_transactions](https://github.com/beetrack/fish_transactions). This project is intended to be
+a safe, welcoming space for collaboration, and contributors are expected to
+adhere to the [Contributor Covenant](http://contributor-covenant.org) code
+of conduct.
+
+
+## Development
+
+This gem is inspired on [AR After Transaction gem](https://github.com/grosser/ar_after_transaction).
 
 
 ## License

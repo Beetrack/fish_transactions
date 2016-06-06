@@ -44,9 +44,35 @@ module FishTransactions
     #
     #
     def after_transaction(opts = {}, &block)
-      # TODO
-      # hint: to know if are active transactions: ActiveRecord::Base.connection.open_transactions
-      yield
+
+      # default options
+      default_options = { only: nil, if_no_transaction: :run}
+      opts = default_options.merge(opts)
+
+      # normalize opts to string keys
+      normalized = opts.dup
+      opts.each{ |k,v| normalized[k.to_s] = v }
+      opts = normalized
+
+
+      if ActiveRecord::Base.connection.open_transactions > 0
+        callbacks = ActiveRecord::Base.callbacks
+
+        case opts['only']
+        when :commit
+          callbacks.store(:commit,&block)
+        when :rollback
+          callbacks.store(:rollback,&block)
+        else
+          # both cases
+          callbacks.store(:commit,&block)
+          callbacks.store(:rollback,&block)
+        end
+      else
+        if opts['if_no_transaction'] == :run
+          block.call
+        end
+      end
     end
     alias after_tx after_transaction
 
@@ -54,7 +80,9 @@ module FishTransactions
     # Executes some code only after current transactions does commit.
     # If no transaction is actually open, the code runs immediately.
     #
-    # Use #after_transaction for more options
+    # Shortcut for <tt>after_transaction(only: :commit, if_no_transaction: :run) do ... end </tt>
+    #
+    # Please use #after_transaction for more options
     def after_commit(&block)
       after_transaction(only: :commit, &block)
     end
@@ -63,7 +91,9 @@ module FishTransactions
     # Executes some code only after current transaction does rollback.
     # If no transaction is actually open, the code does not runs.
     #
-    # Use #after_transaction for more options
+    # Shortcut for <tt>after_transaction(only: :rollback, if_no_transaction: :skip) do ... end </tt>
+    #
+    # Please use #after_transaction for more options
     def after_rollback(&block)
       after_transaction(only: :rollback, if_no_transaction: :skip, &block)
     end

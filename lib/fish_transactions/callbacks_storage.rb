@@ -47,6 +47,8 @@ module FishTransactions
 
     private
 
+    ##
+    # Clear callbacks
     def clear
       @on_commit.clear
       @on_rollback.clear
