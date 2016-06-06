@@ -58,13 +58,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-nulldb-adapter
+  activerecord-nulldb-adapter (~> 0.3)
   bundler (~> 1.12)
   fish_transactions!
   rake (~> 10.0)
-  rdoc
+  rdoc (~> 3.12)
   rspec (~> 3.4)
-  simplecov
+  simplecov (~> 0.11)
 
 BUNDLED WITH
    1.12.5
