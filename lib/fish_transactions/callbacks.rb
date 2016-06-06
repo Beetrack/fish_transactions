@@ -45,6 +45,7 @@ module FishTransactions
     #
     def after_transaction(opts = {}, &block)
       # TODO
+      # hint: to know if are active transactions: ActiveRecord::Base.connection.open_transactions
       yield
     end
     alias after_tx after_transaction

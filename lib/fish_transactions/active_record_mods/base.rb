@@ -1,3 +1,5 @@
+require 'fish_transactions/callbacks_storage'
+
 module FishTransactions
 
   ##
@@ -5,8 +7,13 @@ module FishTransactions
   module ActiveRecordMods
     ##
     # Modifications for ActiveRecord::Base class
+    # All methods here well be class level methods
     module Base
 
+      ##
+      # When extended, this module will:
+      #
+      # * alias the +:transaction+ method and them override it
       def self.extended( base )
 
         base.class_eval do
@@ -20,18 +27,33 @@ module FishTransactions
 
       end
 
+
+
+      ##
+      #
+      #
       def transaction_with_callbacks(*args)
+
+        committed = true
 
         original_ar_transaction(*args) do
           begin
             yield
           rescue ActiveRecord::Rollback
+            commit = false
             raise
           end
         end
       rescue Exception
+        commit = false
         raise
       ensure
+      end
+
+      ##
+      # read-access to callbacks storage
+      def callbacks
+        connection.fish_callbacks_storage ||= FishTransactions::CallbacksStorage.new
       end
 
     end
