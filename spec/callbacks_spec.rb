@@ -249,6 +249,22 @@ module FishTransactions
               raise ActiveRecord::Rollback
             end
           end
+
+          it 'should executes after failure' do
+
+            expect(execution_double).to receive_in_order(
+              :before_the_block,
+              :after_the_block_just_before_commit,
+              :the_after_transaction_block
+            )
+            begin
+              ActiveRecord::Base.transaction do
+                execution_double.run_with_after_transaction_no_args
+                raise "Some other exception"
+              end
+            rescue # doesn't matter
+            end
+          end
         end
 
         context 'and with a {only: :commit} param' do
