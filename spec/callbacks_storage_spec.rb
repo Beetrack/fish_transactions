@@ -64,6 +64,15 @@ module FishTransactions
         end.not_to yield_control
       end
 
+      it 'clears callbacks' do
+        expect do |test_block|
+          storage.store :commit, &test_block
+          storage.committed!
+
+          storage.committed!
+        end.to yield_control.once
+      end
+
     end
 
     describe '#rollbacked!' do
@@ -92,6 +101,16 @@ module FishTransactions
           storage.rolledback!
         end.not_to yield_control
       end
+
+      it 'clears callbacks' do
+        expect do |test_block|
+          storage.store :rollback, &test_block
+          storage.rolledback!
+
+          storage.rolledback!
+        end.to yield_control.once
+      end
+
 
     end
 
