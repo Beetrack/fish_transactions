@@ -31,7 +31,7 @@ the code you wanna run on such events.
 ```ruby
 class SomeClass
 
-  include FishTransaction::Callbacks
+  include FishTransactions::Callbacks
 
   # ...
 
@@ -68,7 +68,7 @@ again runs within transaction
 runs after transaction
 ```
 
-Please see [FishTransactions::Callbacks](FishTransactions/Callbacks.html) for more details.
+Please see `FishTransactions::Callbacks` for more details.
 
 ## Contributing
 
