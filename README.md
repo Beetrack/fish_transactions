@@ -44,8 +44,8 @@ class SomeClass
 
       after_commit do
 
-        # things to do after transaction
-        puts "runs after transaction"
+        # things to do after commit
+        puts "runs after commit"
 
       end
 
@@ -65,10 +65,56 @@ will output
 ```
 runs within transaction
 again runs within transaction
-runs after transaction
+runs after commit
 ```
 
 Please see `FishTransactions::Callbacks` for more details.
+
+## Alternative class methods usage
+Since 1.1 version you can also directly use `after_* methods` as FishTransactions class methods.
+
+
+#### Example
+
+
+```ruby
+class SomeClass
+
+  # ...
+
+  def some_method
+    # ...
+
+    ActiveRecord::Base.transaction do
+      # executes some code
+      puts "runs within transaction"
+
+      FishTransactions.after_commit do
+
+        # things to do after commit
+        puts "runs after commit"
+
+      end
+
+      # executes more code
+      puts "again runs within transaction"
+    end
+    # ...
+
+  end
+
+  # ...
+
+end
+
+```
+will output
+```
+runs within transaction
+again runs within transaction
+runs after commit
+```
+
 
 ## Contributing
 

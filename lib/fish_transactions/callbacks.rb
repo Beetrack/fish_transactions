@@ -7,6 +7,48 @@ module FishTransactions
   # You just need to include this module and you will able to
   # use it.
   #
+  #
+  # Example of usage:
+  #
+  #
+  #   class SomeClass
+  #
+  #     include FishTransactions::Callbacks
+  #
+  #     # ...
+  #
+  #     def some_method
+  #       # ...
+  #
+  #       ActiveRecord::Base.transaction do
+  #         # executes some code
+  #         puts "runs within transaction"
+  #
+  #         after_commit do
+  #
+  #           # things to do after commit
+  #           puts "runs after commit"
+  #
+  #         end
+  #
+  #         # executes more code
+  #         puts "again runs within transaction"
+  #       end
+  #       # ...
+  #
+  #     end
+  #
+  #     # ...
+  #
+  #   end
+  #
+  #
+  # will output
+  #
+  #   runs within transaction
+  #   again runs within transaction
+  #   runs after commit
+  #
   module Callbacks
 
     ##
