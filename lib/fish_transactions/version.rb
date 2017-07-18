@@ -2,5 +2,5 @@
 module FishTransactions
   ##
   # current version
-  VERSION = "1.1"
+  VERSION = "1.1.1"
 end
