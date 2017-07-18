@@ -28,6 +28,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov', "~> 0.11"
   spec.add_development_dependency 'activerecord-nulldb-adapter', "~> 0.3"
 
-  spec.add_runtime_dependency "activerecord", "~> 4.2"
-
+  spec.add_runtime_dependency "activerecord", "< 6"
 end
