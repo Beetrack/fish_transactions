@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    fish_transactions (1.0.0)
-      activerecord (~> 4.2)
+    fish_transactions (1.1.1)
+      activerecord (< 6)
 
 GEM
   remote: https://rubygems.org/
@@ -67,4 +67,4 @@ DEPENDENCIES
   simplecov (~> 0.11)
 
 BUNDLED WITH
-   1.12.5
+   1.14.5
