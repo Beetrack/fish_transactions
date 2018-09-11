@@ -1,4 +1,4 @@
-# FishTransactions
+# FishTransactions NO LONGER MAINTAINED
 
 Fish Transactions allows to add transaction callbacks anywhere.
 
